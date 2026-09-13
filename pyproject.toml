@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "exchange-cli"
+dynamic = ["version"]
+description = "CLI for an on-prem Microsoft Exchange mailbox over EWS: mail and calendar"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+authors = [{ name = "Alexander Ledovsky" }]
+dependencies = [
+    "exchangelib>=5.4",
+]
+
+[project.urls]
+Homepage = "https://github.com/ledovsky/exchange-cli"
+Issues = "https://github.com/ledovsky/exchange-cli/issues"
+
+[project.scripts]
+exch = "exchange_cli.cli:main"
+
+[tool.hatch.version]
+path = "src/exchange_cli/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/exchange_cli"]
