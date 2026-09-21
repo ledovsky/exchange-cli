@@ -90,7 +90,7 @@ def cmd_delete(args, account):
 # Calendar
 def cmd_calendar(args, account):
     from .xcalendar import calendar_list
-    calendar_list(account, args.date, args.days)
+    calendar_list(account, args.date, args.days, args.user)
 
 
 # ── parser ─────────────────────────────────────────────────────────────────
@@ -185,6 +185,9 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("calendar", help="List calendar events")
     p.add_argument("--date", default="today", help="today|tomorrow|yesterday|YYYY-MM-DD (default: today)")
     p.add_argument("--days", type=int, default=1, help="Number of days from --date (default: 1)")
+    p.add_argument("--user", action="append", metavar="WHO",
+                   help="Show this person's calendar instead of yours: an address or a name "
+                        "to look up, repeatable")
     p.set_defaults(func=cmd_calendar)
 
     return parser

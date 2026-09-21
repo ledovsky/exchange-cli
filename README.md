@@ -192,16 +192,36 @@ exch delete <id>            # moves to Deleted Items (not a permanent delete)
 exch calendar                          # today
 exch calendar --date tomorrow
 exch calendar --date 2026-09-14 --days 7
+exch calendar --user jane.doe@example.com      # someone else's calendar
 ```
 
 Read-only. Recurring meetings are expanded. Shows time, subject, location, organizer, your
 response and `[cancelled]` for cancelled meetings. `--date` takes `today`, `tomorrow`,
 `yesterday` or `YYYY-MM-DD`.
 
+**Other people's calendars** — `--user`, repeatable, takes an address or a name to look up in
+the directory (an ambiguous name lists the matches):
+
+```bash
+exch calendar --user jane.doe@example.com
+exch calendar --user "Jane Doe" --user bob@example.com --date tomorrow --days 3
+```
+
+What you see depends on what the person shares with you, as in Outlook; the header line of each
+calendar says which one it was:
+
+- `shared calendar` — you have read access to their calendar folder: same details as your own;
+- `free/busy with details` — the organization default on many servers: time, subject, location,
+  and the status when it is not Busy (`[tentative]`, `[oof]`, …); private events show as
+  `Busy (private)`;
+- `free/busy only` — time and status.
+
+Free/busy requests are limited by the server to a window of about two months (`--days`).
+
 ## Errors
 
 Exit code 1 with a one-line `Error: ...` for: missing config or password, auth failure,
-unreachable server, unknown folder, item or timezone.
+unreachable server, unknown folder, item, person or timezone.
 
 ## Development
 
